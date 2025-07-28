@@ -1,0 +1,40 @@
+{
+  "name": "oauth2-client-edgeworkers",
+  "version": "0.8.2",
+  "description": "Sample edgeworker leveraging oauth2 client library",
+  "main": "src/main.js",
+  "private": true,
+  "type": "module",
+  "sideEffects": "false",
+  "scripts": {
+    "build": "rm -rf dist/* && rollup --bundleConfigAsCjs --config && cp bundle.json dist/ && cd dist && tar -cvzf bundle.tgz *",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "akamai ew ${npm_package_config_account_switch} create-version --bundle dist/bundle.tgz ${npm_package_config_ew_id}",
+    "activate-staging": "akamai ew ${npm_package_config_account_switch} activate ${npm_package_config_ew_id} staging $(jq -r '.\"edgeworker-version\"' ./bundle.json)",
+    "activate-production": "akamai ew ${npm_package_config_account_switch} activate ${npm_package_config_ew_id} production $(jq -r '.\"edgeworker-version\"' ./bundle.json)",
+    "status": "akamai ew ${npm_package_config_account_switch} status ${npm_package_config_ew_id}",
+    "debugauth": "akamai ew ${npm_package_config_account_switch} auth --expiry 720",
+    "version": "jq '.\"edgeworker-version\" = $v' --arg v \"${npm_package_version}\" bundle.json > bundle.json.tmp && mv bundle.json.tmp bundle.json && git add bundle.json",
+    "postversion": "${npm_execpath} run build && ${npm_execpath} run deploy && ${npm_execpath} run activate-staging"
+  },
+  "config": {
+    "account_switch": "--accountkey B-C-1ED34DK:1-8BYUX",
+    "ew_id": "99366"
+  },
+  "keywords": ["edgeworkers", "oauth2", "oidc", "akamai"],
+  "author": "https://github.com/guillaume-fr",
+  "license": "ISC",
+  "packageManager": "pnpm@10.11.0",
+  "dependencies": {
+    "@badgateway/oauth2-client": "^3.2.0",
+    "url-polyfill": "^1.1.13"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-dynamic-import-vars": "^2.1.5",
+    "@rollup/plugin-inject": "^5.0.5",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@types/akamai-edgeworkers": "^1.1.18",
+    "rollup": "^4.45.1"
+  }
+}

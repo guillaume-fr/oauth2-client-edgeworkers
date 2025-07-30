@@ -21,7 +21,6 @@ Configured by default to authenticate against [https://oidctest.wsweet.org/](htt
 - [pnpm](https://pnpm.io)
 - [Akamai CLI](https://techdocs.akamai.com/cli/docs/install)
   - EdgeWorkers module installed: `akamai install edgeworkers`
-- `jq` for CLI JSON manipulation
 
 ### Install dependencies
 
@@ -146,7 +145,7 @@ pnpm run activate-production
   * `@rollup/plugin-inject`
   * `@rollup/plugin-dynamic-import-vars`
 * [`@types/akamai-edgeworkers`](https://www.npmjs.com/package/@types/akamai-edgeworkers) – TypeScript support
-* `jq` – JSON command-line parser
+* [`envsub`](https://www.npmjs.com/package/envsub) – file-level environment variable substitution
 
 ---
 

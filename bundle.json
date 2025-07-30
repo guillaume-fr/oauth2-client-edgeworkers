@@ -1,4 +1,4 @@
 {
-  "description": "Sample edgeworker leveraging oauth2 client library",
-  "edgeworker-version": "0.8.2"
+    "description": "Sample edgeworker leveraging oauth2 client library",
+    "edgeworker-version": "${npm_package_version}"
 }

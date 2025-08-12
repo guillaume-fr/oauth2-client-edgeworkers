@@ -10,16 +10,16 @@
     "build": "rm -rf dist/* && rollup --bundleConfigAsCjs --config && envsub bundle.json dist/bundle.json && cd dist && tar -cvzf bundle.tgz *",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "akamai ew ${npm_package_config_account_switch} create-version --bundle dist/bundle.tgz ${npm_package_config_ew_id}",
-    "activate-staging": "akamai ew ${npm_package_config_account_switch} activate ${npm_package_config_ew_id} staging $(jq -r '.\"edgeworker-version\"' ./bundle.json)",
-    "activate-production": "akamai ew ${npm_package_config_account_switch} activate ${npm_package_config_ew_id} production $(jq -r '.\"edgeworker-version\"' ./bundle.json)",
+    "activate-staging": "akamai ew ${npm_package_config_account_switch} activate ${npm_package_config_ew_id} staging ${npm_package_version}",
+    "activate-production": "akamai ew ${npm_package_config_account_switch} activate ${npm_package_config_ew_id} production ${npm_package_version}",
     "status": "akamai ew ${npm_package_config_account_switch} status ${npm_package_config_ew_id}",
     "debugauth": "akamai ew ${npm_package_config_account_switch} auth --expiry 720",
     "version": "git add package.json",
     "postversion": "${npm_execpath} run build && ${npm_execpath} run deploy && ${npm_execpath} run activate-staging"
   },
   "config": {
-    "account_switch": "--accountkey B-C-1ED34DK:1-8BYUX",
-    "ew_id": "99366"
+    "account_switch": "",
+    "ew_id": "YOUR_EW_ID_HERE"
   },
   "keywords": [
     "edgeworkers",
